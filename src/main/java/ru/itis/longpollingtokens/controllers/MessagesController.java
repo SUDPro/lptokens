@@ -43,6 +43,9 @@ public class MessagesController {
                 }
             }
         }
+        if (messageForm.getText() != null) {
+                    messagesService.save(messageDto);
+        }
         return ResponseEntity.ok().build();
     }
 
