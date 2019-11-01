@@ -30,14 +30,13 @@ public class MessagesController {
         if (!messages.containsKey(token)) {
             messages.put(token, new ArrayList<>());
         }
-        for (List<MessageDto> pageMessages : messages.values()) {
-            synchronized (pageMessages) {
-                MessageDto messageDto = MessageDto.builder()
+        MessageDto messageDto = MessageDto.builder()
                         .text(messageForm.getText())
                         .token(token)
                         .build();
+        for (List<MessageDto> pageMessages : messages.values()) {
+            synchronized (pageMessages) {
                 if (messageForm.getText() != null) {
-                    messagesService.save(messageDto);
                     pageMessages.add(messageDto);
                     pageMessages.notifyAll();
                 }
